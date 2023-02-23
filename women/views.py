@@ -14,7 +14,7 @@ def categories(request, category_id):
 
 
 def archive(request, year):
-    if year > 2023:
+    if int(year) > 2023:
         # Http404()
         return redirect('home', permanent=True)
 

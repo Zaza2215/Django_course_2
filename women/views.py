@@ -3,7 +3,12 @@ from django.shortcuts import render, redirect
 
 from .models import *
 
-menu = ['About', 'Add article', 'Feedback', 'Log in']
+menu = [
+    {"title": "About", "url_name": "about"},
+    {"title": "Add article", "url_name": "add-article"},
+    {"title": "Feedback", "url_name": "contact"},
+    {"title": "Sing in", "url_name": "login"},
+]
 
 
 def index(request):
@@ -24,11 +29,20 @@ def about(request):
     return render(request, 'women/about.html', context=context)
 
 
-def categories(request, catid):
-    if request.POST:
-        print(request.POST)
+def addpage(request):
+    return HttpResponse("Adding article")
 
-    return HttpResponse(f"<h1>Articles by category</h1><p>{catid}</p>")
+
+def contact(request):
+    return HttpResponse("Feedback")
+
+
+def login(request):
+    return HttpResponse("Log in")
+
+
+def show_post(request, post_id: int):
+    return HttpResponse(f'Post with id: {post_id}')
 
 
 def archive(request, year):

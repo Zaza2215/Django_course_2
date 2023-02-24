@@ -1,24 +1,27 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-
+from .models import *
 
 # Create your views here.
+menu = ['About', 'Add article', 'Feedback', 'Log in']
+
+
 def index(request):
-    return HttpResponse('Page app women.')
+    posts = Women.objects.all()
+    context = {
+        'menu': menu,
+        'posts': posts,
+        'title': 'Main page',
+    }
+    return render(request, 'women/index.html', context=context)
 
 
-def categories(request, category_id):
-    if request.GET:
-        print(request.GET)
-    return HttpResponse(f'<h1>Category {category_id}</h1>')
-
-
-def archive(request, year):
-    if int(year) > 2023:
-        # Http404()
-        return redirect('home', permanent=True)
-
-    return HttpResponse(f'year: {year}')
+def about(request):
+    context = {
+        'menu': menu,
+        'title': 'About',
+    }
+    return render(request, 'women/about.html', context=context)
 
 
 def page_not_found(request, exception):

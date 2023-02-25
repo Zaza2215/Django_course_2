@@ -13,10 +13,14 @@ menu = [
 
 def index(request):
     posts = Women.objects.all()
+    cats = Category.objects.all()
+
     context = {
         'posts': posts,
+        'cats': cats,
         'menu': menu,
         'title': 'Main page',
+        'cat_selected': 0,
     }
     return render(request, 'women/index.html', context=context)
 
@@ -54,3 +58,22 @@ def archive(request, year):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+
+def show_category(request, cat_id):
+    posts = Women.objects.filter(cat_id=cat_id)
+    cats = Category.objects.all()
+
+    if len(posts) == 0:
+        raise Http404()
+
+    title = Category.objects.get(id=cat_id).name
+
+    context = {
+        'posts': posts,
+        'cats': cats,
+        'menu': menu,
+        'title': f'view by {title}',
+        'cat_selected': cat_id,
+    }
+    return render(request, 'women/index.html', context=context)

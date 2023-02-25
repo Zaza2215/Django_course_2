@@ -1,4 +1,5 @@
 {% load static %}
+{% load women_tags %}
 <!DOCTYPE html>
 <html lang="eng">
 <head>
@@ -12,29 +13,15 @@
 <table class="table-page" border=0 cellpadding="0" cellspacing="0">
     <tr>
         <td valign=top>
-            {% block mainmenu %}
-            <div class="header">
-                <ul id="mainmenu" class="mainmenu">
-                    <li class="logo"><a href="{% url 'home' %}">
-                        <div class="logo"></div>
-                    </a></li>
-                    {% for m in menu %}
-                    {% if not forloop.last %}
-                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                    {% else %}
-                    <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-                <div class="clear"></div>
-            </div>
-            {% endblock mainmenu %}
 
+            {% show_menu %}
 
             <table class="table-content" border=0 cellpadding="0" cellspacing="0">
                 <tr>
-                    <!-- Sidebar слева -->
+                    <!-- Sidebar left -->
                     <td valign="top" class="left-chapters">
+<!--                        {% get_categories filter_cats=3 %}-->
+
                         <ul id="leftchapters">
                             {% if cat_selected == 0 %}
                                 <li class="selected">All categories</li>
@@ -42,13 +29,8 @@
                                 <li><a href="{% url 'home' %}">All categories</a></li>
                             {% endif %}
 
-                            {% for c in cats %}
-                                {% if c.pk == cat_selected %}
-                                    <li class="selected">{{ c.name }}</li>
-                                {% else %}
-                                    <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
-                                {% endif %}
-                            {% endfor %}
+                            {% show_categories 'name' cat_selected %}
+
                             <li class="share">
                                 <p>Our channel</p>
                                 <a class="share-yt"

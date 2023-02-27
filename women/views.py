@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
+from .forms import *
 
 
 def index(request):
@@ -23,7 +24,23 @@ def about(request):
 
 
 def addpage(request):
-    return HttpResponse("Adding article")
+    if request.method == "POST":
+        form = AddPageForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            try:
+                Women.objects.create(**form.cleaned_data)
+                return redirect("home")
+            except:
+                form.add_error(None, "Error creating post")
+    else:
+        form = AddPageForm()
+
+    context = {
+        'form': form,
+        'title': 'Add new article',
+    }
+    return render(request, 'women/addpage.html', context=context)
 
 
 def contact(request):

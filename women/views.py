@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -11,6 +12,7 @@ from .forms import *
 
 
 class WomenHome(DataMixin, ListView):
+    paginate_by = 3
     model = Women
     template_name = "women/index.html"  # default: "appname/appname_list.html"
     context_object_name = "posts"  # default: "object_list"
@@ -27,8 +29,14 @@ class WomenHome(DataMixin, ListView):
 
 @login_required
 def about(request):
+    contact_list = Women.objects.all()
+    paginator = Paginator(contact_list, 3)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'title': 'About site',
+        'page_obj': page_obj,
     }
     return render(request, 'women/about.html', context=context)
 

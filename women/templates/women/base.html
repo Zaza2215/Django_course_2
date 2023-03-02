@@ -19,10 +19,12 @@
             <table class="table-content" border=0 cellpadding="0" cellspacing="0">
                 <tr>
                     <!-- Sidebar left -->
+                    {% load cache %}
                     <td valign="top" class="left-chapters">
 <!--                        {% get_categories filter_cats=3 %}-->
 
                         <ul id="leftchapters">
+                            {% cache 60 sidevar %}
                             {% if cat_selected == 0 %}
                                 <li class="selected">All categories</li>
                             {% else %}
@@ -37,6 +39,7 @@
                                    href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists"
                                    target="_blank" rel="nofollow"></a>
                             </li>
+                            {% endcache %}
                         </ul>
                     </td>
                     <!-- End Sidebar'а -->

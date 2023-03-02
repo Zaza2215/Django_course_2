@@ -22,7 +22,8 @@ from women.views import page_not_found
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('women.urls'))
+    path('', include('women.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 if settings.DEBUG:

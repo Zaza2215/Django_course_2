@@ -28,6 +28,5 @@ def show_menu(user):
         {"title": "About", "url_name": "about"},
         {"title": "Add article", "url_name": "add-article"},
         {"title": "Feedback", "url_name": "contact"},
-        {"title": "Sing in", "url_name": "login"},
     ]
     return {"menu": menu, "user": user}

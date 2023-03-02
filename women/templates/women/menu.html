@@ -5,14 +5,11 @@
             <div class="logo"></div>
         </a></li>
         {% for m in menu %}
-            {% if not forloop.last %}
-                {% if user.is_authenticated or m.title != 'Add article' %}
-                    <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
-                {% endif %}
-            {% else %}
-                <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
+            {% if user.is_authenticated or m.title != 'Add article' %}
+                <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
             {% endif %}
         {% endfor %}
+        <li class="last"><a href="{% url 'register' %}">Registration</a> | <a href="url 'login' %}">Login</a></li>
     </ul>
     <div class="clear"></div>
 </div>
